@@ -1,0 +1,9 @@
+<h1>MD Wiki</h1>
+
+<h2>Latest articles</h2>
+
+<ul>
+    {% for article in latest %}
+        <li>{{ article.name }}</li>
+    {% endfor %}
+</ul>

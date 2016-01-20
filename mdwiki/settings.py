@@ -56,7 +56,7 @@ ROOT_URLCONF = 'mdwiki.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['mdwiki/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
