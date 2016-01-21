@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <h1>MD Wiki</h1>
 
 <h2>Latest articles</h2>
@@ -7,3 +10,4 @@
         <li>{{ article.name }}</li>
     {% endfor %}
 </ul>
+{% endblock %}

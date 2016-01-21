@@ -32,7 +32,9 @@ class ArticleDetailView(DetailView):
                 context['article'].body,
                 extensions=[
                     'markdown.extensions.wikilinks'
-                ]
-            )
+                ],
+                output_format='html5'
+            ),
+            tags=bleach.ALLOWED_TAGS + ['p']
         )
         return context
