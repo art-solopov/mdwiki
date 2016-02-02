@@ -7,7 +7,9 @@
 
 <ul>
     {% for article in latest_articles %}
-        <li>{{ article.name }}</li>
+        <li>
+            <a href="{% url 'article-detail' article.name %}">{{ article.name }}</a>
+        </li>
     {% endfor %}
 </ul>
 {% endblock %}
