@@ -1,15 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>MD Wiki</h1>
 
-<h2>Latest articles</h2>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Latest articles</h3>
+            </div>
+            <div class="list-group">
+                {% for article in latest_articles %}
+                    <a class="list-group-item" href="{% url 'article-detail' article.name %}">{{ article.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 
-<ul>
-    {% for article in latest_articles %}
-        <li>
-            <a href="{% url 'article-detail' article.name %}">{{ article.name }}</a>
-        </li>
-    {% endfor %}
-</ul>
 {% endblock %}
