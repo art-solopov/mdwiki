@@ -1,7 +1,6 @@
 import markdown
 import bleach
 from django.views.generic import TemplateView, DetailView
-from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Article
 
@@ -39,15 +38,3 @@ class ArticleDetailView(DetailView):
             tags=bleach.ALLOWED_TAGS + ['p']
         )
         return context
-
-
-class ArticleCreate(CreateView):
-
-    model = Article
-    fields = ['name', 'body']
-
-
-class ArticleUpdate(UpdateView):
-
-    model = Article
-    fields = ['name', 'body']
