@@ -1,6 +1,8 @@
 import markdown
 import bleach
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import View, TemplateView
+from django.views.generic.edit import FormView
+from django.shortcuts import redirect, render
 
 from .models import Article
 
@@ -18,18 +20,17 @@ class HomePageView(TemplateView):
         return context
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(View):
 
-    model = Article
-    slug_field = 'name'
-    slug_url_kwarg = 'name'
-    context_object_name = 'article'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['compiled_body'] = bleach.clean(
+    def get(self, request, *args, **kwargs):
+        name = kwargs['name']
+        self.object = self.get_object(name)
+        if self.object is None:
+            return redirect('article-edit', name=name)
+        self.context = {'article': self.object}
+        self.context['compiled_body'] = bleach.clean(
             markdown.markdown(
-                context['article'].body,
+                self.object.body,
                 extensions=[
                     'markdown.extensions.wikilinks'
                 ],
@@ -37,4 +38,15 @@ class ArticleDetailView(DetailView):
             ),
             tags=bleach.ALLOWED_TAGS + ['p']
         )
-        return context
+        return render(request, 'wiki/article_detail.html', context=self.context)
+
+    def get_object(self, name):
+        try:
+            return Article.objects.get(name=name)
+        except Article.DoesNotExist:
+            return None
+
+class ArticleEditView(FormView):
+    pass
+
+
