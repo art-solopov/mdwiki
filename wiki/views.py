@@ -1,10 +1,13 @@
 import markdown
 import bleach
+from django.http.response import Http404
 from django.views.generic import View, TemplateView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, ModelFormMixin
 from django.shortcuts import redirect, render
+from django.core.urlresolvers import reverse_lazy
 
 from .models import Article
+from .forms import ArticleForm
 
 
 class HomePageView(TemplateView):
@@ -46,7 +49,28 @@ class ArticleDetailView(View):
         except Article.DoesNotExist:
             return None
 
-class ArticleEditView(FormView):
-    pass
 
+class ArticleEditView(FormView, ModelFormMixin):
 
+    form_class = ArticleForm
+    model = Article
+    template_name = 'wiki/article_edit.html'
+    slug_field = 'name'
+    slug_url_kwarg = 'name'
+
+    def get_object(self, queryset=None):
+        try:
+            return super().get_object(queryset)
+        except Http404:
+            return None
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object() or Article(name=kwargs['name'])
+        self.success_url = reverse_lazy(
+            'article-detail', kwargs={'name': self.object.name}
+        )
+        return super().post(request, *args, **kwargs)

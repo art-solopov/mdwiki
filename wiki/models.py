@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 
 
 class Article(models.Model):
@@ -9,7 +9,7 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        reverse('article-detail', kwargs={'name': self.name})
+        reverse_lazy('article-detail', kwargs={'name': self.name})
 
 
 class Alias(models.Model):
