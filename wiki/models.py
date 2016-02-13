@@ -9,7 +9,10 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        reverse_lazy('article-detail', kwargs={'name': self.name})
+        return reverse_lazy('article-detail', kwargs={'name': self.name})
+
+    def __str__(self):
+        return self.name
 
 
 class Alias(models.Model):
