@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="well">
+    Sorry, there is no page titled {{ name }}.
+
+    Do you want to <a href="{% url 'article-edit' name %}">create it?</a>
+</div>
+
+{% endblock content %}
+
+

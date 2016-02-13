@@ -1,9 +1,8 @@
 import markdown
 import bleach
-from django.http.response import Http404
 from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView, ModelFormMixin
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 
 from .models import Article
@@ -24,12 +23,16 @@ class HomePageView(TemplateView):
 
 
 class ArticleDetailView(View):
+    ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
+        'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+    ]
 
     def get(self, request, *args, **kwargs):
         name = kwargs['name']
         self.object = self.get_object(name)
         if self.object is None:
-            return redirect('article-edit', name=name)
+            return render(request, 'wiki/404.html',
+                          context={'name': name}, status=404)
         self.context = {'article': self.object}
         self.context['compiled_body'] = bleach.clean(
             markdown.markdown(
@@ -39,9 +42,10 @@ class ArticleDetailView(View):
                 ],
                 output_format='html5'
             ),
-            tags=bleach.ALLOWED_TAGS + ['p']
+            tags=self.ALLOWED_TAGS
         )
-        return render(request, 'wiki/article_detail.html', context=self.context)
+        return render(request, 'wiki/article_detail.html',
+                      context=self.context)
 
     def get_object(self, name):
         try:
@@ -60,8 +64,8 @@ class ArticleEditView(FormView, ModelFormMixin):
 
     def get_object(self, queryset=None):
         try:
-            return super().get_object(queryset)
-        except Http404:
+            return Article.objects.get(name=self.kwargs['name'])
+        except Article.DoesNotExist:
             return None
 
     def get(self, request, *args, **kwargs):
@@ -74,3 +78,9 @@ class ArticleEditView(FormView, ModelFormMixin):
             'article-detail', kwargs={'name': self.object.name}
         )
         return super().post(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['name'] = self.kwargs['name']
+        context['is_new'] = self.object is None
+        return context
