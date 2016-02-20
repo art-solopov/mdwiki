@@ -23,9 +23,10 @@ class HomePageView(TemplateView):
 
 
 class ArticleDetailView(View):
-    ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
-        'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
-    ]
+    ALLOWED_TAGS = (bleach.ALLOWED_TAGS +
+                    ['p', 'table', 'tr', 'td', 'th', 'thead', 'tbody'] +
+                    [ 'h' + str(i + 1) for i in range(6) ]
+    )
 
     def get(self, request, *args, **kwargs):
         name = kwargs['name']
@@ -35,13 +36,7 @@ class ArticleDetailView(View):
                           context={'name': name}, status=404)
         self.context = {'article': self.object}
         self.context['compiled_body'] = bleach.clean(
-            markdown.markdown(
-                self.object.body,
-                extensions=[
-                    'markdown.extensions.wikilinks'
-                ],
-                output_format='html5'
-            ),
+            self.object.body_as_html(),
             tags=self.ALLOWED_TAGS
         )
         return render(request, 'wiki/article_detail.html',
