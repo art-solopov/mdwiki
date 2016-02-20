@@ -1,12 +1,12 @@
 import markdown
 import bleach
 from django.views.generic import View, TemplateView
-from django.views.generic.edit import FormView, ModelFormMixin
+from django.views.generic.edit import FormView, ModelFormMixin, CreateView
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 
 from .models import Article
-from .forms import ArticleForm
+from .forms import ArticleForm, NewArticleForm
 
 
 class HomePageView(TemplateView):
@@ -79,3 +79,9 @@ class ArticleEditView(FormView, ModelFormMixin):
         context['name'] = self.kwargs['name']
         context['is_new'] = self.object is None
         return context
+
+class NewArticleView(CreateView):
+
+    model = Article
+    form_class = NewArticleForm
+    template_name = 'wiki/new_article.html'

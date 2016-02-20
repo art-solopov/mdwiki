@@ -12,5 +12,6 @@ urlpatterns = [
     url(
         r'^wiki/(?P<name>{0})/edit$'.format(ARTICLE_NAME_REGEXP),
         views.ArticleEditView.as_view(), name='article-edit'
-    )
+    ),
+    url(r'^new_article', views.NewArticleView.as_view(), name='new-article')
 ]

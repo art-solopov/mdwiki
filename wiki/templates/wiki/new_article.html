@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>New article</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                <div class="controls">{{ field }}</div>
+            </div>
+        {% endfor %}
+        <input type="submit" class="btn btn-success" value="{% if is_new %}Create{% else %}Update{% endif %}" />
+    </form>
+{% endblock content %}
