@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ article.name }}</h1>
+    <div class="clearfix">
+        <a href="{% url 'article-edit' name=article.name %}" class="btn btn-primary pull-right">Edit</a>
+        <h1 class="pull-left">{{ article.name }}</h1>
+    </div>
 
-<div class="body">
-    {% autoescape off %}
-        {{ compiled_body }}
-    {% endautoescape %}
-</div>
+    <div class="body">
+        {% autoescape off %}
+            {{ compiled_body }}
+        {% endautoescape %}
+    </div>
 {% endblock %}
