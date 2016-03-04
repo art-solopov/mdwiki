@@ -1,11 +1,10 @@
-import markdown
 import bleach
 from django.views.generic import View, TemplateView
 from django.views.generic.edit import FormView, ModelFormMixin, CreateView
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 
-from .models import Article
+from .models import Article, Alias
 from .forms import ArticleForm, NewArticleForm
 
 
@@ -16,10 +15,12 @@ class HomePageView(TemplateView):
     template_name = 'wiki/index.html'
     http_method_names = ['get', 'head']
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['latest_articles'] = Article.objects.order_by('-updated')[:5]
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['latest_articles'] = (Article.objects
+                                      .prefetch_related('alias_set')
+                                      .order_by('-updated')[:5])
+        return context
 
 
 class ArticleDetailView(View):

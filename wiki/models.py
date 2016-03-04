@@ -11,6 +11,9 @@ class Article(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def name(self):
+        return self.alias_set.all()[0].name
+
     def body_as_html(self):
         '''Converting the model's body into HTML
         TODO: Move to helper?
