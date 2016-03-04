@@ -1,29 +1,24 @@
-from django.db import models
-from django.core.urlresolvers import reverse_lazy
-from markdown import markdown
-from .etc import generate_article_link
 import re
 
-ARTICLE_NAME_REGEXP = '[\w\s,:?!\-\'"]+'
+from django.db import models
+from markdown import markdown
+
+from .etc import generate_article_link
 
 class Article(models.Model):
 
-    name = models.CharField('Article name', max_length=1100, db_index=True)
     body = models.TextField('Article body in Markdown')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    def get_absolute_url(self):
-        return reverse_lazy('article-detail', kwargs={'name': self.name})
-
-    def __str__(self):
-        return self.name
-
     def body_as_html(self):
+        '''Converting the model's body into HTML
+        TODO: Move to helper?
+        '''
 
         # Preprocessing MD
         mdbody = re.sub(
-            '\\[\\[({0})\\]\\]'.format(ARTICLE_NAME_REGEXP),
+            '\\[\\[(.*?)\\]\\]',
             lambda match: generate_article_link(match.group(1)),
             self.body
             )
@@ -40,5 +35,6 @@ class Article(models.Model):
 
 class Alias(models.Model):
     name = models.CharField('Alias', max_length=1100, db_index=True)
+    slug = models.SlugField('Slug', max_length=1100)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=True)

@@ -21,9 +21,9 @@ class NewArticleForm(forms.ModelForm):
 
     """New article form"""
 
-    class Meta(ArticleForm.Meta):
-        fields = ['name', 'body']
-        widgets = {
-            'body': ArticleForm.Meta.body_widget,
-            'name': forms.TextInput(attrs={'class': 'form-control'})
-        }
+    # class Meta(ArticleForm.Meta):
+    #     fields = ['name', 'body']
+    #     widgets = {
+    #         'body': ArticleForm.Meta.body_widget,
+    #         'name': forms.TextInput(attrs={'class': 'form-control'})
+    #     }

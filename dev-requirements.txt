@@ -4,13 +4,24 @@
 #
 #    pip-compile dev-requirements.in
 #
-decorator==4.0.6          # via ipython, traitlets
-fake-factory==0.5.3
+astroid==1.4.4            # via pylint
+colorama==0.3.6           # via pylint
+decorator==4.0.9          # via ipython, traitlets
+fake-factory==0.5.5
 ipython-genutils==0.1.0   # via traitlets
-ipython==4.0.3
+ipython==4.1.2
+lazy-object-proxy==1.2.1  # via astroid
 path.py==8.1.2            # via pickleshare
 pexpect==4.0.1            # via ipython
 pickleshare==0.6          # via ipython
-ptyprocess==0.5           # via pexpect
+ptyprocess==0.5.1         # via pexpect
+pylint==1.5.4
+python-dateutil==2.5.0    # via fake-factory
 simplegeneric==0.8.1      # via ipython
+six==1.10.0               # via astroid, fake-factory, pylint, python-dateutil
 traitlets==4.1.0          # via ipython
+wrapt==1.10.6             # via astroid
+
+# The following packages are commented out because they are
+# considered to be unsafe in a requirements file:
+# setuptools==20.2.2        # via ipython

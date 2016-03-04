@@ -16,10 +16,10 @@ class HomePageView(TemplateView):
     template_name = 'wiki/index.html'
     http_method_names = ['get', 'head']
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['latest_articles'] = Article.objects.order_by('-updated')[:5]
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['latest_articles'] = Article.objects.order_by('-updated')[:5]
+    #     return context
 
 
 class ArticleDetailView(View):
@@ -43,10 +43,11 @@ class ArticleDetailView(View):
                       context=self.context)
 
     def get_object(self, name):
-        try:
-            return Article.objects.get(name=name)
-        except Article.DoesNotExist:
-            return None
+        pass
+    #     try:
+    #         return Article.objects.get(name=name)
+    #     except Article.DoesNotExist:
+    #         return None
 
 
 class ArticleEditView(FormView, ModelFormMixin):
@@ -57,18 +58,18 @@ class ArticleEditView(FormView, ModelFormMixin):
     slug_field = 'name'
     slug_url_kwarg = 'name'
 
-    def get_object(self, queryset=None):
-        try:
-            return Article.objects.get(name=self.kwargs['name'])
-        except Article.DoesNotExist:
-            return None
+    # def get_object(self, queryset=None):
+    #     try:
+    #         return Article.objects.get(name=self.kwargs['name'])
+    #     except Article.DoesNotExist:
+    #         return None
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object() or Article(name=kwargs['name'])
+        # self.object = self.get_object() or Article(name=kwargs['name'])
         self.success_url = reverse_lazy(
             'article-detail', kwargs={'name': self.object.name}
         )
