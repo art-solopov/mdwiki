@@ -12,7 +12,10 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def name(self):
-        return self.alias_set.all()[0].name
+        return self._main_alias().name
+
+    def slug(self):
+        return self._main_alias().slug
 
     def body_as_html(self):
         '''Converting the model's body into HTML
@@ -34,6 +37,9 @@ class Article(models.Model):
             ],
             output_format='html5'
             )
+
+    def _main_alias(self):
+        return self.alias_set.all()[0]
 
 
 class Alias(models.Model):

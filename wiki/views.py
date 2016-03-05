@@ -1,5 +1,5 @@
 import bleach
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, DetailView
 from django.views.generic.edit import FormView, ModelFormMixin, CreateView
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
@@ -23,32 +23,23 @@ class HomePageView(TemplateView):
         return context
 
 
-class ArticleDetailView(View):
+class ArticleDetailView(DetailView):
     ALLOWED_TAGS = (bleach.ALLOWED_TAGS +
                     ['p', 'table', 'tr', 'td', 'th', 'thead', 'tbody'] +
                     [ 'h' + str(i + 1) for i in range(6) ]
     )
 
-    def get(self, request, *args, **kwargs):
-        name = kwargs['name']
-        self.object = self.get_object(name)
-        if self.object is None:
-            return render(request, 'wiki/404.html',
-                          context={'name': name}, status=404)
-        self.context = {'article': self.object}
-        self.context['compiled_body'] = bleach.clean(
-            self.object.body_as_html(),
+    # Yes, model is Alias, because that's what we fetch with the slug
+    model = Alias
+    template_name = 'wiki/article_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['compiled_body'] = bleach.clean(
+            self.object.article.body_as_html(),
             tags=self.ALLOWED_TAGS
         )
-        return render(request, 'wiki/article_detail.html',
-                      context=self.context)
-
-    def get_object(self, name):
-        pass
-    #     try:
-    #         return Article.objects.get(name=name)
-    #     except Article.DoesNotExist:
-    #         return None
+        return context
 
 
 class ArticleEditView(FormView, ModelFormMixin):
