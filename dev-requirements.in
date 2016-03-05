@@ -1,3 +1,4 @@
 ipython
 fake-factory
 pylint
+pylint-django
