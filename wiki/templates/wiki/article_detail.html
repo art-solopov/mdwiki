@@ -2,8 +2,13 @@
 
 {% block content %}
     <div class="clearfix">
-        <a href="#" class="btn btn-primary pull-right">Edit</a>
-        <h1 class="pull-left">{{ object.name }}</h1>
+        <a href="{% url 'article-edit' object.slug %}" class="btn btn-primary pull-right">Edit</a>
+        <h1 class="pull-left">
+            {{ article_name }}
+            {% if article_name != object.name %}
+                <small>Redirected from {{ object.name }}</small>
+            {% endif %}
+        </h1>
     </div>
 
     <div class="body">

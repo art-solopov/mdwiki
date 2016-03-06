@@ -1,6 +1,7 @@
 import bleach
 from django.views.generic import View, TemplateView, DetailView
-from django.views.generic.edit import FormView, ModelFormMixin, CreateView
+from django.views.generic.edit import (FormView, ModelFormMixin,
+                                       CreateView, UpdateView)
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 
@@ -35,6 +36,7 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['article_name'] = self.object.article.name
         context['compiled_body'] = bleach.clean(
             self.object.article.body_as_html(),
             tags=self.ALLOWED_TAGS
@@ -42,36 +44,23 @@ class ArticleDetailView(DetailView):
         return context
 
 
-class ArticleEditView(FormView, ModelFormMixin):
+class ArticleEditView(UpdateView):
 
     form_class = ArticleForm
     model = Article
     template_name = 'wiki/article_edit.html'
-    slug_field = 'name'
-    slug_url_kwarg = 'name'
-
-    # def get_object(self, queryset=None):
-    #     try:
-    #         return Article.objects.get(name=self.kwargs['name'])
-    #     except Article.DoesNotExist:
-    #         return None
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        # self.object = self.get_object() or Article(name=kwargs['name'])
-        self.success_url = reverse_lazy(
-            'article-detail', kwargs={'name': self.object.name}
-        )
-        return super().post(request, *args, **kwargs)
+    slug_field = 'alias__slug'
+    slug_url_kwarg = 'slug'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['name'] = self.kwargs['name']
-        context['is_new'] = self.object is None
+        context['name'] = self.object.name()
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('article-detail',
+                            kwargs={'slug': self.kwargs['slug']})
+
 
 class NewArticleView(CreateView):
 

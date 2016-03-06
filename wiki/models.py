@@ -39,7 +39,7 @@ class Article(models.Model):
             )
 
     def _main_alias(self):
-        return self.alias_set.all()[0]
+        return self.alias_set.order_by('created')[0]
 
 
 class Alias(models.Model):
@@ -47,3 +47,6 @@ class Alias(models.Model):
     slug = models.SlugField('Slug', max_length=1100)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "{0} [{1}]".format(self.name, self.slug)
