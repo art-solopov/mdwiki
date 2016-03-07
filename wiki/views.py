@@ -4,6 +4,7 @@ from django.views.generic.edit import (FormView, ModelFormMixin,
                                        CreateView, UpdateView)
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
+from django.db import transaction
 
 from .models import Article, Alias
 from .forms import ArticleForm, NewArticleForm
@@ -27,8 +28,7 @@ class HomePageView(TemplateView):
 class ArticleDetailView(DetailView):
     ALLOWED_TAGS = (bleach.ALLOWED_TAGS +
                     ['p', 'table', 'tr', 'td', 'th', 'thead', 'tbody'] +
-                    [ 'h' + str(i + 1) for i in range(6) ]
-    )
+                    ['h' + str(i + 1) for i in range(6)])
 
     # Yes, model is Alias, because that's what we fetch with the slug
     model = Alias
@@ -62,8 +62,23 @@ class ArticleEditView(UpdateView):
                             kwargs={'slug': self.kwargs['slug']})
 
 
-class NewArticleView(CreateView):
+class NewArticleView(FormView):
 
-    model = Article
     form_class = NewArticleForm
     template_name = 'wiki/new_article.html'
+
+    def form_valid(self, form):
+        with transaction.atomic():
+            self.article = Article(body=form.cleaned_data['body'])
+            self.article.save()
+            self.main_alias = Alias(
+                name=form.cleaned_data['name'],
+                slug=form.cleaned_data['slug'],
+                article=self.article
+            )
+            self.main_alias.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('article-detail',
+                            kwargs={'slug': self.main_alias.slug})
