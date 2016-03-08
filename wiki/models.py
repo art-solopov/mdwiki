@@ -1,4 +1,5 @@
 import re
+import textwrap as tw
 
 from django.db import models
 from markdown import markdown
@@ -16,6 +17,9 @@ class Article(models.Model):
 
     def slug(self):
         return self._main_alias().slug
+
+    def __str__(self):
+        return tw.shorten(self.body, width=70)
 
     def body_as_html(self):
         '''Converting the model's body into HTML

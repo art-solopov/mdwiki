@@ -3,6 +3,7 @@
 {% block content %}
     <div class="clearfix">
         <a href="{% url 'article-edit' object.slug %}" class="btn btn-primary pull-right">Edit</a>
+        <a href="{% url 'new-alias' object.slug %}" class="btn btn-primary pull-right">New alias</a>
         <h1 class="pull-left">
             {{ article_name }}
             {% if article_name != object.name %}

@@ -1,8 +1,8 @@
 import bleach
-from django.views.generic import View, TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import (FormView, ModelFormMixin,
+                                       SingleObjectMixin,
                                        CreateView, UpdateView)
-from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 from django.db import transaction
 
@@ -82,3 +82,18 @@ class NewArticleView(FormView):
     def get_success_url(self):
         return reverse_lazy('article-detail',
                             kwargs={'slug': self.main_alias.slug})
+
+class NewAliasView(CreateView):
+
+    model = Alias
+    fields = ['name', 'slug']
+    template_name = 'wiki/new_alias.html'
+
+    def form_valid(self, form):
+        article = Article.objects.get(alias__slug=self.kwargs['slug'])
+        form.instance.article = article
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('article-detail',
+                            kwargs={'slug': self.object.slug})
