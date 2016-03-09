@@ -3,12 +3,9 @@ import textwrap
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-from .models import Article
+from .models import Article, Alias
 
-class ArticleTestCase(TestCase):
-
-    """Testing the Article model"""
-
+class NewArticleMixin:
     def setUp(self):
         self.article = Article(
             body=textwrap.dedent('''\
@@ -18,6 +15,19 @@ class ArticleTestCase(TestCase):
             ''')
         )
         self.article.save()
+        super().setUp()
+
+class NewAliasMixin(NewArticleMixin):
+    def setUp(self):
+        super().setUp()
+        self.alias = Alias(name='Test alias', slug='test-alias',
+                           article=self.article)
+        self.alias.save()
+
+
+class ArticleTestCase(NewArticleMixin, TestCase):
+
+    """Testing the Article model"""
 
     def test_body_as_html(self):
         self.assertIn(
@@ -32,4 +42,22 @@ class HomePageViewTestCase(TestCase):
 
     def test_response(self):
         response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+
+class ArticleDetailViewTestCase(NewAliasMixin, TestCase):
+
+    """ Testing the ArticleDetailView"""
+
+    def test_response(self):
+        response = self.client.get(reverse('article-detail',
+                                           kwargs={'slug': self.alias.slug}))
+        self.assertEqual(response.status_code, 200)
+
+class ArticleEditViewTestCase(NewAliasMixin, TestCase):
+
+    """ Testing the ArticleEditView """
+
+    def test_response(self):
+        response = self.client.get(reverse('article-edit',
+                                           kwargs={'slug': self.alias.slug}))
         self.assertEqual(response.status_code, 200)
