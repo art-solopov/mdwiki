@@ -57,7 +57,26 @@ class ArticleEditViewTestCase(NewAliasMixin, TestCase):
 
     """ Testing the ArticleEditView """
 
-    def test_response(self):
+    def test_form_response(self):
         response = self.client.get(reverse('article-edit',
                                            kwargs={'slug': self.alias.slug}))
         self.assertEqual(response.status_code, 200)
+
+    def test_form_valid(self):
+        response = self.client.post(
+            reverse('article-edit', kwargs={'slug': self.alias.slug}),
+            {'body': 'New test body'}
+        )
+        self.article.refresh_from_db()
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.article.body, 'New test body')
+
+    def test_form_invalid(self):
+        response = self.client.post(
+            reverse('article-edit', kwargs={'slug': self.alias.slug}),
+            {'body': ''}
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('form', response.context)

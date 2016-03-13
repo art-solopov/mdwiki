@@ -1,8 +1,6 @@
 import bleach
 from django.views.generic import TemplateView, DetailView
-from django.views.generic.edit import (FormView, ModelFormMixin,
-                                       SingleObjectMixin,
-                                       CreateView, UpdateView)
+from django.views.generic.edit import (FormView, CreateView, UpdateView)
 from django.core.urlresolvers import reverse_lazy
 from django.db import transaction
 
