@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.db import transaction
 
 from .models import Article, Alias
-from .forms import ArticleForm, NewArticleForm
+from .forms import ArticleForm, NewArticleForm, AliasForm
 
 
 class HomePageView(TemplateView):
@@ -83,8 +83,7 @@ class NewArticleView(FormView):
 
 class NewAliasView(CreateView):
 
-    model = Alias
-    fields = ['name', 'slug']
+    form_class = AliasForm
     template_name = 'wiki/new_alias.html'
 
     def form_valid(self, form):
