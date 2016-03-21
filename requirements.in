@@ -1,4 +1,6 @@
 Django
+django-crispy-forms
 psycopg2
+
 markdown
 Bleach

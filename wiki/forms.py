@@ -1,4 +1,6 @@
 from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 from .models import Article
 
@@ -10,6 +12,13 @@ def _article_form_widget():
 class ArticleForm(forms.ModelForm):
 
     """Article editing form"""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'article_edit_form' # TODO bind to article pk
+        self.helper.form_method = 'post'
+
+        self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:
         model = Article
