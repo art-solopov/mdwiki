@@ -2,15 +2,14 @@ import re
 import textwrap as tw
 
 from django.db import models
+from model_utils.models import TimeStampedModel
 from markdown import markdown
 
 from .etc import generate_article_link
 
-class Article(models.Model):
+class Article(TimeStampedModel, models.Model):
 
     body = models.TextField('Article body in Markdown')
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
 
     def name(self):
         return self._main_alias().name
@@ -46,11 +45,10 @@ class Article(models.Model):
         return self.alias_set.order_by('created')[0]
 
 
-class Alias(models.Model):
+class Alias(TimeStampedModel, models.Model):
     name = models.CharField('Alias', max_length=1100, db_index=True)
     slug = models.SlugField('Slug', max_length=1100)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return "{0} [{1}]".format(self.name, self.slug)
