@@ -1,5 +1,4 @@
 Django
-django-crispy-forms
 django-extensions
 django-model-utils
 psycopg2

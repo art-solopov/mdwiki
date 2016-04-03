@@ -19,7 +19,7 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['latest_articles'] = (Article.objects
                                       .prefetch_related('alias_set')
-                                      .order_by('-updated')[:5])
+                                      .order_by('-modified')[:5])
         return context
 
 
