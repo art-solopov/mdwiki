@@ -1,6 +1,7 @@
 import bleach
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import (FormView, CreateView, UpdateView)
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.db import transaction
 
@@ -42,7 +43,7 @@ class ArticleDetailView(DetailView):
         return context
 
 
-class ArticleEditView(UpdateView):
+class ArticleEditView(LoginRequiredMixin, UpdateView):
 
     form_class = ArticleForm
     model = Article

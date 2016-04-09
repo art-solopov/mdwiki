@@ -2,6 +2,8 @@ import textwrap
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 from .models import Article, Alias
 
@@ -23,6 +25,13 @@ class NewAliasMixin(NewArticleMixin):
         self.alias = Alias(name='Test alias', slug='test-alias',
                            article=self.article)
         self.alias.save()
+
+class UserMixin:
+    def setUp(self):
+        super().setUp()
+        self.user = User.objects.create_user(username='testuser',
+                                             password='test')
+        self.client.login(username='testuser', password='test')
 
 
 class ArticleTestCase(NewArticleMixin, TestCase):
@@ -53,7 +62,7 @@ class ArticleDetailViewTestCase(NewAliasMixin, TestCase):
                                            kwargs={'slug': self.alias.slug}))
         self.assertEqual(response.status_code, 200)
 
-class ArticleEditViewTestCase(NewAliasMixin, TestCase):
+class ArticleEditViewTestCase(UserMixin, NewAliasMixin, TestCase):
 
     """ Testing the ArticleEditView """
 
