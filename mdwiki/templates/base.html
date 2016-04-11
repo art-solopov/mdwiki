@@ -30,6 +30,15 @@
                       <a href="{% url 'new-article' %}">Create article</a>
                     </li>
                   </ul>
+
+                  <ul class="nav navbar-nav navbar-right">
+                      {% if request.user.is_authenticated %}
+                          <li><p class="navbar-text">{{ request.user.username }}</p></li>
+                          <li><a href="{% url "logout" %}">Log out</a></li>
+                      {% else %}
+                          <li><a href="{% url "login" %}?next=/">Log in</a></li>
+                      {% endif %}
+                  </ul>
                 </div>
             </div>
         </nav>

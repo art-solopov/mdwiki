@@ -2,10 +2,11 @@
 {% load bootstrap %}
 
 {% block content %}
-    {% for error in form.errors %}
-        <div>{{ error }}</div><div>{{ form.errors.error }}</div>
-    {% endfor %}
 
-    {% bootstrap_form form %}
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            {% bootstrap_form form %}
+        </div>
+    </div>
 
 {% endblock content %}

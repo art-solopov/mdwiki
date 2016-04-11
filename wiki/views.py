@@ -61,7 +61,7 @@ class ArticleEditView(LoginRequiredMixin, UpdateView):
                             kwargs={'slug': self.kwargs['slug']})
 
 
-class NewArticleView(FormView):
+class NewArticleView(LoginRequiredMixin, FormView):
 
     form_class = NewArticleForm
     template_name = 'wiki/new_article.html'
@@ -82,7 +82,7 @@ class NewArticleView(FormView):
         return reverse_lazy('article-detail',
                             kwargs={'slug': self.main_alias.slug})
 
-class NewAliasView(CreateView):
+class NewAliasView(LoginRequiredMixin, CreateView):
 
     form_class = AliasForm
     template_name = 'wiki/new_alias.html'
