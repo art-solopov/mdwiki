@@ -91,7 +91,7 @@ class ArticleEditViewTestCase(UserMixin, NewAliasMixin, TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('form', response.context)
 
-class NewArticleView(TestCase):
+class NewArticleViewTestCase(UserMixin, TestCase):
 
     def test_form_response(self):
         response = self.client.get(reverse('new-article'))
