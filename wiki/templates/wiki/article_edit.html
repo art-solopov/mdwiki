@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% load bootstrap %}
 
 {% block content %}
     <h1>Editing: {{ name }}</h1>
-    {% bootstrap_form form %}
 
+    {% load crispy_forms_tags %}
+    {% crispy form %}
 {% endblock content %}

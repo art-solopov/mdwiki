@@ -1,11 +1,17 @@
 {% extends "base.html" %}
-{% load bootstrap %}
 
 {% block content %}
 
     <div class="row">
         <div class="col-sm-4 col-sm-offset-4">
-            {% bootstrap_form form %}
+            <form method="POST">
+                {% load crispy_forms_tags %}
+                {% csrf_token %}
+                {{ form | crispy }}
+                <div class="div_id_submit">
+                    <input type="submit" value="Submit" class="btn btn-success" />
+                </div>
+            </form>
         </div>
     </div>
 
