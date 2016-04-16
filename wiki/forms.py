@@ -1,4 +1,6 @@
 from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 from .models import Article, Alias
 
@@ -10,6 +12,13 @@ def _article_form_widget():
 class ArticleForm(forms.ModelForm):
 
     """Article editing form"""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'article_edit_form' # TODO bind to article pk
+        self.helper.form_method = 'post'
+
+        self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:
         model = Article
@@ -22,6 +31,12 @@ class ArticleForm(forms.ModelForm):
 class NewArticleForm(forms.Form):
 
     """New article form"""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id  = 'new_article_form'
+
+        self.helper.add_input(Submit('submit', 'Submit'))
 
     name = forms.CharField(label='Article name', max_length=1100)
     slug = forms.SlugField(label='Article slug', max_length=1100)
@@ -30,6 +45,12 @@ class NewArticleForm(forms.Form):
 class AliasForm(forms.ModelForm):
 
     """Alias form"""
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'alias_form'
+
+        self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:
         model = Alias

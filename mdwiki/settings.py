@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'crispy_forms',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -123,6 +124,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+DEFAULT_LOGGER_PARAMS = {
+    'level': 'DEBUG' if DEBUG else 'INFO',
+    'handlers': ['console']
+}
+
 # Logging
 LOGGING = {
     'version': 1,
@@ -133,9 +139,10 @@ LOGGING = {
         }
     },
     'loggers': {
-        'django': {
-            'level': 'DEBUG',
-            'handlers': ['console']
-        }
+        'django.db.backends': DEFAULT_LOGGER_PARAMS,
+        'django.request': DEFAULT_LOGGER_PARAMS,
+        'django.security.*': DEFAULT_LOGGER_PARAMS
     }
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

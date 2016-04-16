@@ -5,6 +5,7 @@
 #    pip-compile requirements.in
 #
 bleach==1.4.2
+django-crispy-forms==1.6.0
 django-extensions==1.6.1
 django-model-utils==2.4
 django==1.9.1

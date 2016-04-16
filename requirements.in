@@ -1,6 +1,7 @@
 Django
 django-extensions
 django-model-utils
+django-crispy-forms
 psycopg2
 
 markdown
