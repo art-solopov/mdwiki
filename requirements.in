@@ -2,7 +2,7 @@ Django
 django-extensions
 django-model-utils
 django-crispy-forms
-django-reversion
+django-simple-history
 psycopg2
 
 markdown

@@ -2,6 +2,7 @@ import re
 import textwrap as tw
 
 from django.db import models
+from simple_history.models import HistoricalRecords
 from model_utils.models import TimeStampedModel
 from markdown import markdown
 
@@ -10,6 +11,7 @@ from .etc import generate_article_link
 class Article(TimeStampedModel, models.Model):
 
     body = models.TextField('Article body in Markdown')
+    history = HistoricalRecords()
 
     def name(self):
         return self._main_alias().name
