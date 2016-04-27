@@ -1,8 +1,49 @@
+import textwrap
+
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
-from utils import NewArticleMixin, NewAliasMixin
-from common.tests.utils import UserMixin
+from .models import Article, Alias
+
+class NewArticleMixin:
+    def setUp(self):
+        self.article = Article(
+            body=textwrap.dedent('''\
+            ## This is some test markdown!
+
+            It has [[Wiki links]] and stuff.
+            ''')
+        )
+        self.article.save()
+        super().setUp()
+
+class NewAliasMixin(NewArticleMixin):
+    def setUp(self):
+        super().setUp()
+        self.alias = Alias(name='Test alias', slug='test-alias',
+                           article=self.article)
+        self.alias.save()
+
+class UserMixin:
+    def setUp(self):
+        super().setUp()
+        self.user = User.objects.create_user(username='testuser',
+                                             password='test')
+        self.client.login(username='testuser', password='test')
+
+
+class ArticleTestCase(NewArticleMixin, TestCase):
+
+    """Testing the Article model"""
+
+    def test_body_as_html(self):
+        self.assertIn(
+            reverse('article-detail', kwargs={ 'slug': 'wiki-links' }),
+            self.article.body_as_html()
+        )
+
 
 class HomePageViewTestCase(TestCase):
 
