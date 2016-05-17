@@ -1,23 +1,41 @@
 import textwrap
+import factory
+import factory.django as fact_dj
+from faker import Faker
 
 from wiki.models import Article, Alias
 
+faker = Faker()
+
+class ArticleFactory(fact_dj.DjangoModelFactory):
+    class Meta:
+        model = Article
+
+    body = (
+        ''.join(faker.paragraphs(nb=2)) +
+        textwrap.dedent('''
+
+        Some *test Markdown,* including [[Wiki links]]
+        ''')
+    )
+
+class AliasFactory(fact_dj.DjangoModelFactory):
+    class Meta:
+        model = Alias
+
+    name = factory.LazyAttribute(lambda _: faker.company())
+    slug = factory.LazyAttribute(lambda _: faker.slug()) # TODO remove when signals are generated
+    article = factory.SubFactory(ArticleFactory)
+
+
 class NewArticleMixin:
     def setUp(self):
-        self.article = Article(
-            body=textwrap.dedent('''\
-            ## This is some test markdown!
-
-            It has [[Wiki links]] and stuff.
-            ''')
-        )
-        self.article.save()
+        self.article = ArticleFactory.create()
         super().setUp()
 
-class NewAliasMixin(NewArticleMixin):
+class NewAliasMixin:
     def setUp(self):
         super().setUp()
-        self.alias = Alias(name='Test alias', slug='test-alias',
-                           article=self.article)
-        self.alias.save()
+        self.alias = AliasFactory.create()
+        self.article = self.alias.article
 

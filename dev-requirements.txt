@@ -7,6 +7,7 @@
 astroid==1.4.4            # via pylint, pylint-plugin-utils
 colorama==0.3.6           # via pylint
 decorator==4.0.9          # via ipython, traitlets
+factory-boy==2.7.0
 fake-factory==0.5.5
 ipython-genutils==0.1.0   # via traitlets
 ipython==4.1.2

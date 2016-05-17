@@ -2,3 +2,4 @@ ipython
 fake-factory
 pylint
 pylint-django
+factory_boy
