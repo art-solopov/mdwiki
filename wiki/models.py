@@ -2,6 +2,9 @@ import re
 import textwrap as tw
 
 from django.db import models
+from django.template.defaultfilters import slugify
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from simple_history.models import HistoricalRecords
 from model_utils.models import TimeStampedModel
 from markdown import markdown
@@ -48,9 +51,14 @@ class Article(TimeStampedModel, models.Model):
 
 
 class Alias(TimeStampedModel, models.Model):
-    name = models.CharField('Alias', max_length=1100, db_index=True)
-    slug = models.SlugField('Slug', max_length=1100)
+    name = models.CharField('Alias', max_length=1100, db_index=True, unique=True)
+    slug = models.SlugField('Slug', max_length=1100, db_index=True, unique=True,
+                            editable=False)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
 
     def __str__(self):
         return "{0} [{1}]".format(self.name, self.slug)
+
+@receiver(pre_save, sender=Alias)
+def set_slug(instance, *args, **kwargs):
+    instance.slug = slugify(instance.name)

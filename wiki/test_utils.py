@@ -26,7 +26,6 @@ class AliasFactory(fact_dj.DjangoModelFactory):
         model = Alias
 
     name = factory.Faker('company')
-    slug = factory.Faker('slug') # TODO remove when signals are generated
 
     article = factory.SubFactory(ArticleFactory)
 

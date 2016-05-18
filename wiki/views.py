@@ -72,7 +72,6 @@ class NewArticleView(LoginRequiredMixin, FormView):
             self.article.save()
             self.main_alias = Alias(
                 name=form.cleaned_data['name'],
-                slug=form.cleaned_data['slug'],
                 article=self.article
             )
             self.main_alias.save()

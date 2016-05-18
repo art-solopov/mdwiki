@@ -1,8 +1,9 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 
-from .models import Article
-from .test_utils import NewArticleMixin
+from .models import Article, Alias
+from .test_utils import NewArticleMixin, NewAliasMixin
 
 class ArticleTestCase(NewArticleMixin, TestCase):
 
@@ -13,3 +14,8 @@ class ArticleTestCase(NewArticleMixin, TestCase):
             reverse('article-detail', kwargs={ 'slug': 'wiki-links' }),
             self.article.body_as_html()
         )
+
+class AliasTestCase(NewAliasMixin, TestCase):
+
+    def test_set_slug(self):
+        self.assertEqual(slugify(self.alias.name), self.alias.slug)

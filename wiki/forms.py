@@ -39,7 +39,7 @@ class NewArticleForm(forms.Form):
         self.helper.add_input(Submit('submit', 'Submit'))
 
     name = forms.CharField(label='Article name', max_length=1100)
-    slug = forms.SlugField(label='Article slug', max_length=1100)
+    # slug = forms.SlugField(label='Article slug', max_length=1100)
     body = forms.CharField(label='Article body', widget=_article_form_widget())
 
 class AliasForm(forms.ModelForm):
@@ -54,4 +54,5 @@ class AliasForm(forms.ModelForm):
 
     class Meta:
         model = Alias
-        fields = ['name', 'slug']
+        # fields = ['name', 'slug']
+        fields = ['name']
