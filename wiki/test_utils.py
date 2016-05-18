@@ -7,24 +7,27 @@ from wiki.models import Article, Alias
 
 faker = Faker()
 
+def generate_body():
+    lorem = "\n\n".join(faker.paragraphs(nb=2))
+    test_markdown = textwrap.dedent('''
+        Some *test Markdown,* including [[Wiki links]]
+        ''')
+    return lorem + "\n\n" + test_markdown
+
 class ArticleFactory(fact_dj.DjangoModelFactory):
     class Meta:
         model = Article
 
-    body = (
-        ''.join(faker.paragraphs(nb=2)) +
-        textwrap.dedent('''
+    body = factory.LazyFunction(generate_body)
 
-        Some *test Markdown,* including [[Wiki links]]
-        ''')
-    )
 
 class AliasFactory(fact_dj.DjangoModelFactory):
     class Meta:
         model = Alias
 
-    name = factory.LazyAttribute(lambda _: faker.company())
-    slug = factory.LazyAttribute(lambda _: faker.slug()) # TODO remove when signals are generated
+    name = factory.Faker('company')
+    slug = factory.Faker('slug') # TODO remove when signals are generated
+
     article = factory.SubFactory(ArticleFactory)
 
 
