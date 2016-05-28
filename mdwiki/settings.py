@@ -125,6 +125,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 STATICFILES_FINDERS = [
@@ -132,6 +133,10 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'pipeline.finders.PipelineFinder',
 ]
+STATICFILES_DIRS = [
+    ('bower', os.path.join(BASE_DIR, 'bower_components'))
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 DEFAULT_LOGGER_PARAMS = {
@@ -156,3 +161,21 @@ LOGGING = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+PIPELINE = {
+    'STYLESHEETS': {
+        'application': {
+            'source_filenames': (
+                'bower/bootstrap/dist/css/bootstrap.css',
+            )
+        }
+    },
+    'JAVASCRIPT': {
+        'application': {
+            'source_filenames': (
+                'bower/jquery/dist/jquery.js',
+                'bower/bootstrap/dist/js/bootstrap.js'
+            )
+        }
+    }
+}

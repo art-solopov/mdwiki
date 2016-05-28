@@ -1,0 +1,21 @@
+{
+  "name": "mdwiki",
+  "homepage": "https://github.com/art-solopov/mdwiki",
+  "authors": [
+    "Artemiy Solopov <art-solopov@yandex.ru>"
+  ],
+  "description": "MDWiki assets",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
