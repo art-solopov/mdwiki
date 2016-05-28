@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'simple_history',
+    'pipeline',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -125,6 +126,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.PipelineFinder',
+]
+
 
 DEFAULT_LOGGER_PARAMS = {
     'level': 'DEBUG' if DEBUG else 'INFO',
