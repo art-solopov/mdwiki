@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'simple_history',
-    'pipeline',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -125,17 +124,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+def bower_component(*args):
+    return os.path.join(BASE_DIR, 'bower_components', *args)
 
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'pipeline.finders.PipelineFinder',
-]
 STATICFILES_DIRS = [
-    ('bower', os.path.join(BASE_DIR, 'bower_components'))
+    ('bootstrap', bower_component('bootstrap', 'dist')),
+    ('jquery', bower_component('jquery', 'dist')),
 ]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
@@ -161,21 +158,3 @@ LOGGING = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
-PIPELINE = {
-    'STYLESHEETS': {
-        'application': {
-            'source_filenames': (
-                'bower/bootstrap/dist/css/bootstrap.css',
-            )
-        }
-    },
-    'JAVASCRIPT': {
-        'application': {
-            'source_filenames': (
-                'bower/jquery/dist/jquery.js',
-                'bower/bootstrap/dist/js/bootstrap.js'
-            )
-        }
-    }
-}
