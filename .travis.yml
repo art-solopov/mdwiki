@@ -6,6 +6,8 @@ python:
 services:
   - postgresql
 install:
-  - "pip install -r requirements.txt" 
+  - "pip install -r requirements.txt"
   - "pip install -r dev-requirements.txt"
+env:
+  - "INTEGRATION_TEST_DRIVER=phantomjs"
 script: "python manage.py test"

@@ -1,3 +1,4 @@
+from random import random as rnd
 import textwrap
 import factory
 import factory.django as fact_dj
@@ -29,6 +30,11 @@ class AliasFactory(fact_dj.DjangoModelFactory):
 
     article = factory.SubFactory(ArticleFactory)
 
+def seed_article_data():
+    for _ in range(10):
+        alias = AliasFactory.create()
+        if rnd() < 0.2:
+            AliasFactory.create(article=alias.article)
 
 class NewArticleMixin:
     def setUp(self):
@@ -40,4 +46,3 @@ class NewAliasMixin:
         super().setUp()
         self.alias = AliasFactory.create()
         self.article = self.alias.article
-

@@ -11,6 +11,7 @@ factory-boy==2.7.0
 fake-factory==0.5.5
 ipython-genutils==0.1.0   # via traitlets
 ipython==4.1.2
+jedi==0.9.0
 lazy-object-proxy==1.2.1  # via astroid
 path.py==8.1.2            # via pickleshare
 pexpect==4.0.1            # via ipython
@@ -20,6 +21,7 @@ pylint-django==0.7.1
 pylint-plugin-utils==0.2.3  # via pylint-django
 pylint==1.5.4
 python-dateutil==2.5.0    # via fake-factory
+selenium==2.53.2
 simplegeneric==0.8.1      # via ipython
 six==1.10.0               # via astroid, fake-factory, pylint, python-dateutil
 traitlets==4.1.0          # via ipython

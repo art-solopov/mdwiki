@@ -3,3 +3,5 @@ fake-factory
 pylint
 pylint-django
 factory_boy
+selenium
+jedi
