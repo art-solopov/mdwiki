@@ -95,6 +95,15 @@ class NewAliasView(LoginRequiredMixin, CreateView):
         return reverse_lazy('article-detail',
                             kwargs={'slug': self.object.slug})
 
-class SearchView(FormView):
-    def form_valid(self, form):
-        articles = Article.objects.get(alias__article__icontents=form.cleaned_data['q'])
+class SearchView(TemplateView):
+    template_name = 'wiki/search.html'
+    http_method_names = ['get', 'head']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['articles'] = (Article.objects
+                               .prefetch_related('alias_set')
+                               .filter(alias__name__icontains=self.request.GET.get('q'))
+                               .distinct()
+                              )
+        return context
