@@ -2,7 +2,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
-from .models import Article, Alias
+from wiki.models import Article, Alias
 
 def _article_form_widget():
     return forms.Textarea(
@@ -39,7 +39,6 @@ class NewArticleForm(forms.Form):
         self.helper.add_input(Submit('submit', 'Submit'))
 
     name = forms.CharField(label='Article name', max_length=1100)
-    # slug = forms.SlugField(label='Article slug', max_length=1100)
     body = forms.CharField(label='Article body', widget=_article_form_widget())
 
 class AliasForm(forms.ModelForm):
@@ -54,5 +53,7 @@ class AliasForm(forms.ModelForm):
 
     class Meta:
         model = Alias
-        # fields = ['name', 'slug']
         fields = ['name']
+
+class SearchForm(forms.Form):
+    q = forms.CharField(label='Search', max_length=1500)

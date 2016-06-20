@@ -5,8 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.db import transaction
 
-from .models import Article, Alias
-from .forms import ArticleForm, NewArticleForm, AliasForm
+from wiki.models import Article, Alias
+from wiki.forms import ArticleForm, NewArticleForm, AliasForm
 
 
 class HomePageView(TemplateView):
@@ -94,3 +94,7 @@ class NewAliasView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('article-detail',
                             kwargs={'slug': self.object.slug})
+
+class SearchView(FormView):
+    def form_valid(self, form):
+        articles = Article.objects.get(alias__article__icontents=form.cleaned_data['q'])
