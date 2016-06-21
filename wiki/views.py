@@ -101,9 +101,15 @@ class SearchView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['articles'] = (Article.objects
-                               .prefetch_related('alias_set')
-                               .filter(alias__name__icontains=self.request.GET.get('q'))
-                               .distinct()
-                              )
+        params = self.request.GET
+        if 'honeypot' in params:
+            context['honeypot_triggered'] = True
+        else:
+            context['articles'] = (Article.objects
+                                   .prefetch_related('alias_set')
+                                   .filter(alias__name__icontains=self.request.GET.get('q'))
+                                   .distinct('id')
+                                   .values('id', 'alias__name', 'alias__slug')
+                                  )
+            print(context['articles'])
         return context

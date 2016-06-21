@@ -1,0 +1,8 @@
+<form class="navbar-form navbar-right search-form" action="{% url 'search' %}" method="get" role="search">
+    <div class="form-group">
+        <input name="q" id="search_q" class="form-control" placeholder="Search" />
+    </div>
+
+    <input type="submit" name="submit" value="Submit" class="btn btn-default" />
+    <input type="checkbox" name="honeypot" class="hidden" />
+</form>

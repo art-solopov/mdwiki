@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <ul>
-        {% for article in articles %}
-            <li>{{ article.name }}</li>
-        {% endfor %}
-    </ul>
+    {% if honeypot_triggered %}
+        Error: honeypot triggered
+    {% else %}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="list-group">
+                    {% for article in articles %}
+                        <a class="list-group-item" href="{% url 'article-detail' article.alias__slug %}">{{ article.alias__name }}</a>
+                    {% endfor %}
+                </di>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
