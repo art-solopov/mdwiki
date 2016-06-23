@@ -4,6 +4,7 @@ from django.views.generic.edit import (FormView, CreateView, UpdateView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.db import transaction
+from django.utils.translation import ugettext as _
 
 from wiki.models import Article, Alias
 from wiki.forms import ArticleForm, NewArticleForm, AliasForm

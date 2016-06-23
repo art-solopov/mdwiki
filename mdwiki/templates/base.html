@@ -25,7 +25,6 @@
                       <a href="{% url 'new-article' %}">Create article</a>
                     </li>
                   </ul>
-                  
                   <ul class="nav navbar-nav navbar-right">
                       {% if request.user.is_authenticated %}
                           <li><p class="navbar-text">{{ request.user.username }}</p></li>
