@@ -1,3 +1,4 @@
+{% load i18n %}
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html;charset=UTF-8">
@@ -22,15 +23,15 @@
                 <div class="collapse navbar-collapse">
                   <ul class="navbar-nav nav">
                     <li>
-                      <a href="{% url 'new-article' %}">Create article</a>
+                      <a href="{% url 'new-article' %}">{% trans "Create article" %}</a>
                     </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                       {% if request.user.is_authenticated %}
                           <li><p class="navbar-text">{{ request.user.username }}</p></li>
-                          <li><a href="{% url "logout" %}">Log out</a></li>
+                          <li><a href="{% url "logout" %}">{% trans "Log out" %}</a></li>
                       {% else %}
-                          <li><a href="{% url "login" %}?next=/">Log in</a></li>
+                          <li><a href="{% url "login" %}?next=/">{% trans "Log in" %}</a></li>
                       {% endif %}
                   </ul>
 

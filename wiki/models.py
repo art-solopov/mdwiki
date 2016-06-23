@@ -5,15 +5,16 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.utils.translation import ugettext as _
 from simple_history.models import HistoricalRecords
 from model_utils.models import TimeStampedModel
 from markdown import markdown
 
-from .etc import generate_article_link
+from wiki.etc import generate_article_link
 
 class Article(TimeStampedModel, models.Model):
 
-    body = models.TextField('Article body in Markdown')
+    body = models.TextField(_('Article body in Markdown'))
     history = HistoricalRecords()
 
     def name(self):
@@ -51,8 +52,8 @@ class Article(TimeStampedModel, models.Model):
 
 
 class Alias(TimeStampedModel, models.Model):
-    name = models.CharField('Alias', max_length=1100, db_index=True, unique=True)
-    slug = models.SlugField('Slug', max_length=1100, db_index=True, unique=True,
+    name = models.CharField(_('Alias'), max_length=1100, db_index=True, unique=True)
+    slug = models.SlugField(_('Slug'), max_length=1100, db_index=True, unique=True,
                             editable=False)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
 
