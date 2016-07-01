@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -15,10 +16,10 @@ class ArticleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'article_edit_form' # TODO bind to article pk
+        self.helper.form_id = 'article_edit_form_{0}'.format(self.instance.id)
         self.helper.form_method = 'post'
 
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit('submit', _('Update the article')))
 
     class Meta:
         model = Article
@@ -36,10 +37,10 @@ class NewArticleForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_id  = 'new_article_form'
 
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit('submit', _('Create new article')))
 
     name = forms.CharField(label='Article name', max_length=1100)
-    body = forms.CharField(label='Article body', widget=_article_form_widget())
+    body = forms.CharField(label=_('Article body in Markdown'), widget=_article_form_widget())
 
 class AliasForm(forms.ModelForm):
 

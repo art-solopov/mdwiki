@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-23 22:22+0000\n"
+"POT-Creation-Date: 2016-07-01 15:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,18 +19,26 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: models.py:17
+#: wiki/forms.py:23
+msgid "Update the article"
+msgstr "Обновить статью"
+
+#: wiki/forms.py:25
+msgid "Create new article"
+msgstr "Добавить статью"
+
+#: wiki/models.py:17
 msgid "Article body in Markdown"
 msgstr "Текст статьи на Markdown"
 
-#: models.py:55
+#: wiki/models.py:56
 msgid "Alias"
 msgstr "Псевдоним"
 
-#: models.py:56
+#: wiki/models.py:57
 msgid "Slug"
 msgstr "Постоянная ссылка"
 
-#: templates/wiki/index.html:10
+#: wiki/templates/wiki/index.html:10
 msgid "Latest articles"
 msgstr "Недавние статьи"

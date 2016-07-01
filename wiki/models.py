@@ -2,10 +2,10 @@ import re
 import textwrap as tw
 
 from django.db import models
-from django.template.defaultfilters import slugify
+from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from simple_history.models import HistoricalRecords
 from model_utils.models import TimeStampedModel
 from markdown import markdown
@@ -16,6 +16,7 @@ class Article(TimeStampedModel, models.Model):
 
     body = models.TextField(_('Article body in Markdown'))
     history = HistoricalRecords()
+    locale = models.SlugField(max_length=10, editable=False)
 
     def name(self):
         return self._main_alias().name
@@ -62,4 +63,4 @@ class Alias(TimeStampedModel, models.Model):
 
 @receiver(pre_save, sender=Alias)
 def set_slug(instance, *args, **kwargs):
-    instance.slug = slugify(instance.name)
+    instance.slug = slugify(instance.name, allow_unicode=True)

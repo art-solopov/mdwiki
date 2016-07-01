@@ -20,6 +20,7 @@ class ArticleFactory(fact_dj.DjangoModelFactory):
         model = Article
 
     body = factory.LazyFunction(generate_body)
+    locale = 'en'
 
 
 class AliasFactory(fact_dj.DjangoModelFactory):

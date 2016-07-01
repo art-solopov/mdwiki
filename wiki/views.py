@@ -70,6 +70,7 @@ class NewArticleView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         with transaction.atomic():
             self.article = Article(body=form.cleaned_data['body'])
+            self.article.locale = self.request.LANGUAGE_CODE
             self.article.save()
             self.main_alias = Alias(
                 name=form.cleaned_data['name'],
