@@ -39,7 +39,7 @@ class NewArticleForm(forms.Form):
 
         self.helper.add_input(Submit('submit', _('Create new article')))
 
-    name = forms.CharField(label='Article name', max_length=1100)
+    name = forms.CharField(label=_('Article name'), max_length=1100)
     body = forms.CharField(label=_('Article body in Markdown'), widget=_article_form_widget())
 
 class AliasForm(forms.ModelForm):
