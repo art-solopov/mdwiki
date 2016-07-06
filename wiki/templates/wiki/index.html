@@ -7,7 +7,10 @@
     <div class="col-sm-6 widget">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3>{% trans "Latest articles" %}</h3>
+                <h3>
+                    <i class="fa fa-clock-o"></i>
+                    <span>{% trans "Latest articles" %}</span>
+                </h3>
             </div>
             <div class="list-group">
                 {% for article in latest_articles %}

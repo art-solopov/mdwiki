@@ -139,8 +139,8 @@ def bower_component(*args):
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    ('bootstrap', bower_component('bootstrap', 'dist')),
-    ('jquery', bower_component('jquery', 'dist')),
+    ('fonts', bower_component('bootstrap', 'dist', 'fonts')),
+    ('fonts', bower_component('font-awesome', 'fonts'))
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

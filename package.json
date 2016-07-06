@@ -1,0 +1,24 @@
+{
+  "name": "mdwiki",
+  "version": "0.0.1",
+  "description": "Assets for MDWiki",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/art-solopov/mdwiki.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/art-solopov/mdwiki/issues"
+  },
+  "homepage": "https://github.com/art-solopov/mdwiki#readme",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-less": "^1.3.0"
+  }
+}
