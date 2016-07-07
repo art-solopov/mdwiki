@@ -18,6 +18,7 @@
   "homepage": "https://github.com/art-solopov/mdwiki#readme",
   "dependencies": {
     "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-less": "^1.3.0"
   }

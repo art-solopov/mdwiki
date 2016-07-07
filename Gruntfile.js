@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                     sourceMap: true
                 },
                 files: {
-                    'common/static/app.css': 'assets/css/app.less'
+                    'common/static/_app.css': 'assets/css/app.less'
                 }
             }
         },
@@ -23,10 +23,26 @@ module.exports = function(grunt) {
                     'assets/js/*.js'
                 ],
                 dest: 'common/static/app.js'
+            },
+            css: {
+                src: [
+                    'bower_components/normalize-css/normalize.css',
+                    'common/static/_app.css'
+                ],
+                dest: 'common/static/app.css'
             }
+        },
+        clean: {
+            temp_assets: ['common/static/_app.*']
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+
+    grunt.registerTask('assets:css', 'compile CSS assets',
+        ['less:production', 'concat:css', 'clean:temp_assets']);
+    grunt.registerTask('assets:js', 'compile JS assets',
+        ['concat:js']);
 }

@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "font-awesome": "fontawesome#^4.6.3"
+    "font-awesome": "fontawesome#^4.6.3",
+    "normalize-css": "normalize.css#^4.2.0"
   }
 }
