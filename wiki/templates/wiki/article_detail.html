@@ -16,8 +16,7 @@
     </h1>
 
     <div class="body">
-        {% autoescape off %}
-            {{ compiled_body }}
-        {% endautoescape %}
+        {% load markdown_text %}
+        {{ article.body | mdtext | safe }}
     </div>
 {% endblock %}
