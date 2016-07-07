@@ -1,4 +1,3 @@
-import bleach
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import (FormView, CreateView, UpdateView)
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -26,10 +25,6 @@ class HomePageView(TemplateView):
 
 
 class ArticleDetailView(DetailView):
-    ALLOWED_TAGS = (bleach.ALLOWED_TAGS +
-                    ['p', 'table', 'tr', 'td', 'th', 'thead', 'tbody'] +
-                    ['h' + str(i + 1) for i in range(6)])
-
     # Yes, model is Alias, because that's what we fetch with the slug
     model = Alias
     template_name = 'wiki/article_detail.html'
@@ -37,10 +32,7 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['article_name'] = self.object.article.name
-        context['compiled_body'] = bleach.clean(
-            self.object.article.body_as_html(),
-            tags=self.ALLOWED_TAGS
-        )
+        context['article'] = self.object.article
         return context
 
 

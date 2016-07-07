@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'simple_history',
+    'treebeard'
 ]
 
 MIDDLEWARE_CLASSES = [
