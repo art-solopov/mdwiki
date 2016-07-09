@@ -14,7 +14,7 @@ class Article(TimeStampedModel, models.Model):
 
     body = models.TextField(_('Article body in Markdown'))
     history = HistoricalRecords()
-    locale = models.SlugField(max_length=10, editable=False)
+    locale = models.SlugField(max_length=10)
 
     def name(self):
         return self._main_alias().name
