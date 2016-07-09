@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-02 21:06+0000\n"
+"POT-Creation-Date: 2016-07-09 21:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,18 +20,25 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: common/templates/base.html:26
+#: common/templates/base.html:2
+msgid "Edit"
+msgstr "Редактировать"
+
+#: common/templates/base.html:25
 msgid "Create article"
 msgstr "Написать статью"
 
-#: common/templates/base.html:32
+# Provided by admin
+#: common/templates/base.html:31
 msgid "Log out"
 msgstr ""
 
-#: common/templates/base.html:34
+# Provided by admin
+#: common/templates/base.html:33
 msgid "Log in"
 msgstr ""
 
+# Provided by admin
 #: common/templates/common/search_form.html:5
 msgid "Search"
 msgstr ""

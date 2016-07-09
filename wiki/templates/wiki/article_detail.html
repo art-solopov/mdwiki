@@ -1,10 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
-    <div class="well clearfix">
+    <div class="well clearfix article-detail-toolbar">
+        <a href="#" class="btn btn-link">{% trans "Comments" %}</a>
+
         <div class="btn-group pull-right">
-            <a href="{% url 'article-edit' object.slug %}" class="btn btn-primary btn-edit">Edit</a>
-            <a href="{% url 'new-alias' object.slug %}" class="btn btn-primary btn-new-alias">New alias</a>
+            <a href="{% url 'article-edit' object.slug %}" class="btn btn-primary article-detail-toolbar__edit-btn">{% trans "Edit" %}</a>
+            <a href="{% url 'new-alias' object.slug %}" class="btn btn-primary article-detail-toolbar__new-alias-btn">{% trans "New alias" %}</a>
         </div>
     </div>
 

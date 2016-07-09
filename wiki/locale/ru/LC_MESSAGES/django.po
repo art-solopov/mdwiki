@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-02 21:06+0000\n"
+"POT-Creation-Date: 2016-07-09 21:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,18 +31,30 @@ msgstr "Добавить статью"
 msgid "Article name"
 msgstr "Название"
 
-#: wiki/forms.py:43 wiki/models.py:17
+#: wiki/forms.py:43 wiki/models.py:15
 msgid "Article body in Markdown"
 msgstr "Текст статьи на Markdown"
 
-#: wiki/models.py:56
+#: wiki/models.py:33
 msgid "Alias"
 msgstr "Псевдоним"
 
-#: wiki/models.py:57
+#: wiki/models.py:34
 msgid "Slug"
 msgstr "Постоянная ссылка"
 
-#: wiki/templates/wiki/index.html:10
+#: wiki/models.py:48
+msgid "Comment"
+msgstr "Комментарий"
+
+#: wiki/templates/wiki/article_detail.html:6
+msgid "Comments"
+msgstr "Обсуждение"
+
+#: wiki/templates/wiki/article_detail.html:10
+msgid "New alias"
+msgstr "Создать псевдоним"
+
+#: wiki/templates/wiki/index.html:12
 msgid "Latest articles"
 msgstr "Недавние статьи"
