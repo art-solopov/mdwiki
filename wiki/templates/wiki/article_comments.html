@@ -7,8 +7,12 @@
     <div class="article-comments">
         {% for comment in comments %}
             <div class="article-comments__comment" data-depth="{{ comment.depth }}">
+                {% if comment.was_edited %}
+                    <time class="article-comments__modified" datetime="{{ comment.modified|date:"c" }}">{{ comment.modified }}</time>
+                {% endif %}
                 <div class="article-comments__author">{{ comment.user }}</div>
                 <div class="article-comments__comment-body">{{ comment.comment }}</div>
+                <time class="article-comments__created" datetime="{{ comment.created|date:"c" }}">{{ comment.created }}</time>
             </div>
         {% endfor %}
     </div>

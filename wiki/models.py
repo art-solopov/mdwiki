@@ -1,4 +1,5 @@
 import textwrap as tw
+import datetime
 
 from django.db import models
 from django.utils.text import slugify
@@ -42,7 +43,10 @@ class Alias(TimeStampedModel, models.Model):
 def set_slug(instance, *args, **kwargs):
     instance.slug = slugify(instance.name, allow_unicode=True)
 
-class Comment(NS_Node):
+class Comment(TimeStampedModel, NS_Node):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     comment = models.TextField(_('Comment'))
+
+    def was_edited(self):
+        return self.modified - self.created > datetime.timedelta(hours=1)
