@@ -10,6 +10,8 @@ urlpatterns = [
         name='article-edit'),
     url(r'^wiki/(?P<slug>[\w-]+)/new_alias', views.NewAliasView.as_view(),
         name='new-alias'),
+    url(r'^wiki/(?P<slug>[\w-]+)/comments', views.ArticleCommentsView.as_view(),
+        name='new-alias'),
     url(r'^new_article', views.NewArticleView.as_view(), name='new-article'),
     url(r'^search', views.SearchView.as_view(), name='search')
 ]

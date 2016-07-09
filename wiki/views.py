@@ -1,11 +1,12 @@
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 from django.views.generic.edit import (FormView, CreateView, UpdateView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.db import transaction
 from django.utils.translation import ugettext as _
+from django.shortcuts import get_object_or_404
 
-from wiki.models import Article, Alias
+from wiki.models import Article, Alias, Comment
 from wiki.forms import ArticleForm, NewArticleForm, AliasForm
 
 
@@ -106,4 +107,18 @@ class SearchView(TemplateView):
                                    .values('id', 'alias__name', 'alias__slug')
                                   )
             print(context['articles'])
+        return context
+
+class ArticleCommentsView(ListView):
+
+    template_name = 'wiki/article_comments.html'
+    context_object_name='comments'
+
+    def get_queryset(self):
+        self.article = get_object_or_404(Article, alias__slug=self.kwargs['slug'])
+        return self.article.comment_set.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['article_name'] = self.article.name()
         return context

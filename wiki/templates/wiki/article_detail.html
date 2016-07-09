@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="well clearfix article-detail-toolbar">
-        <a href="#" class="btn btn-link">{% trans "Comments" %}</a>
+        <a href="#" class="btn btn-link">{% trans "comments"|capfirst %}</a>
 
         <div class="btn-group pull-right">
             <a href="{% url 'article-edit' object.slug %}" class="btn btn-primary article-detail-toolbar__edit-btn">{% trans "Edit" %}</a>
