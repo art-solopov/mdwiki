@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load comment_helpers %}
 
 {% block content %}
     <h1>{{ article_name }} &mdash; {% trans "comments" %}</h1>
 
     <div class="article-comments">
         {% for comment in comments %}
-            <div class="article-comments__comment" data-depth="{{ comment.depth }}">
+            <div id="comment_{{ comment.id }}" class="article-comments__comment" data-depth="{{ comment.depth }}" style="{% comment_style comment %}">
                 {% if comment.was_edited %}
                     <time class="article-comments__modified" datetime="{{ comment.modified|date:"c" }}">{{ comment.modified }}</time>
                 {% endif %}
