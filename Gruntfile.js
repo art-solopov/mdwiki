@@ -34,12 +34,23 @@ module.exports = function(grunt) {
         },
         clean: {
             temp_assets: ['common/static/_app.*']
+        },
+        watch: {
+            css: {
+                files: ['assets/css/*.less'],
+                tasks: ['assets:css']
+            },
+            js: {
+                files: ['assets/js/*.js'],
+                tasks: ['assets:js']
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('assets:css', 'compile CSS assets',
         ['less:production', 'concat:css', 'clean:temp_assets']);
