@@ -47,6 +47,10 @@ class Comment(TimeStampedModel, NS_Node):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     comment = models.TextField(_('Comment'))
+    removed = models.BooleanField(_('Removed by a moderator'), default=False)
 
     def was_edited(self):
         return self.modified - self.created > datetime.timedelta(hours=1)
+
+    def __str__(self):
+        return tw.shorten(self.comment, width=70)
